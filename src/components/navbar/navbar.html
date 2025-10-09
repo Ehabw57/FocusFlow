@@ -1,0 +1,23 @@
+<nav class="flex justify-between items-center px-8 py-2 border-b border-b-blue-300 bg-white">
+  <div class="gap-3 flex items-center">
+    <img class="w-7 h-7" src="/logo.png" />
+    <h3 class="text-xl font-bold">FocusFlow</h3>
+  </div>
+
+  <ul class="flex justify-center gap-5">
+    @for (item of navLinks; track $index) {
+    <li class="text-sm text-gray-500 font-bold">
+      <a [routerLink]="item.link" class="hover:text-blue-700 transition-colors duration-300">{{ item.name }}</a>
+    </li>
+    }
+  </ul>
+
+  <div class="flex gap-3 items-center">
+    @if(false){
+    <button class="border-2 border-blue-600 text-blue-600 px-4 text-sm h-8 rounded-xl">Register</button>
+    <button class="bg-red-500 text-amber-50 px-4 text-sm h-8 rounded-xl">Logout</button>
+    }
+    <button class="bg-blue-500 text-cyan-50 px-4 text-sm h-8 rounded-xl">Login</button>
+    <img class="w-10 h-10 rounded-full" src="/usr.jpg" />
+  </div>
+</nav>
