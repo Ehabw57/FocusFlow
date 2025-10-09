@@ -1,0 +1,68 @@
+<div class="w-full max-w-md mx-auto rounded-lg overflow-hidden">
+  <div class="px-6 py-4">
+    <h1 class="text-xl font-semibold text-gray-900 text-center">To-Do List</h1>
+  </div>
+
+  <!-- Input new task -->
+  <div class="flex items-center space-x-3 px-6 py-2 bg-gray-200 rounded-md">
+    <span class="text-gray-400 text-lg">+</span>
+    <input
+      type="text"
+      [(ngModel)]="newTaskText"
+      (keypress)="onKeyPress($event)"
+      placeholder="Add a new task..."
+      class="flex-1 bg-transparent text-gray-600 placeholder-gray-400 focus:outline-none text-sm"
+    />
+  </div>
+
+  <!-- Todos and tasks -->
+  <div class="flex flex-col gap-2 mt-2">
+    @for (todo of todos(); track todo.id) {
+    <div
+      class="group px-3 flex items-center justify-between bg-gray-200 hover:bg-gray-100 transition-colors rounded-md"
+    >
+      <div class="flex items-center space-x-3 flex-1">
+        <button
+          (click)="removeTask(todo.id)"
+          class="text-red-400 hover:text-red-700 ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          X
+        </button>
+        <label
+          [for]="'todo' + todo.id"
+          class="text-sm py-4 flex-1 transition-all"
+          [class.line-through]="todo.completed"
+          [ngClass]="todo.completed ? 'line-through text-gray-500 ml-2' : 'text-gray-900'"
+        >
+          {{ todo.text }}
+        </label>
+      </div>
+
+      <div class="flex justify-center items-center">
+        <input
+          type="checkbox"
+          [id]="'todo' + todo.id"
+          (change)="toggleTask(todo.id)"
+          [checked]="todo.completed"
+          class="peer appearance-none size-5 border border-gray-400 rounded-sm checked:bg-green-600 checked:border-0"
+        />
+        <span class="absolute hidden peer-checked:block text-white text-sm">✔</span>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Progress bar -->
+  <div class="w-full bg-gray-200 rounded-full h-2 mt-3">
+    <div
+      class="h-2 rounded-full transition-all duration-300"
+      [ngClass]="totalCount == completedCount ? 'bg-green-400' : 'bg-yellow-400'"
+      [style.width.%]="totalCount > 0 ? (completedCount / totalCount) * 100 : 0"
+    ></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="text-right">
+    <span class="text-sm text-gray-500">{{ completedCount }}/{{ totalCount }} tasks completed</span>
+  </div>
+</div>
