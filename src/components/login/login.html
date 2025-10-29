@@ -1,0 +1,51 @@
+<div class="min-h-[90vh] flex flex-col items-center justify-center">
+  <div class="text-center mb-8">
+    <img src="/logo.png" class="w-10 h-10 mx-auto mb-4" />
+    <h1 class="text-3xl font-black">Welcome back to FocusFlow</h1>
+    <p class="text-gray-600">Sign in to continue your productivity journey.</p>
+  </div>
+
+  @if(isError) {
+  <div
+    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 w-full max-w-xs md:max-w-md lg:max-w-2xl"
+  >
+    <span class="block sm:inline">{{ isError.message }}</span>
+  </div>
+  }
+  <form
+    (ngSubmit)="onSubmit()"
+    [formGroup]="form"
+    class="w-full max-w-xs md:max-w-md lg:max-w-2xl rounded-lg"
+  >
+    <div class="mb-4">
+      <label for="email" class="block text-sm font-medium text-gray-900">Username or Email</label>
+      <input
+        type="text"
+        id="email"
+        name="email"
+        formControlName="email"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+    <div class="mb-4">
+      <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        formControlName="password"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+    <div class="flex justify-between items-center mb-4">
+      <a class="w-full text-right text-sm text-blue-500 hover:underline">Forgot your password?</a>
+    </div>
+    <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
+      Login
+    </button>
+    <p class="text-center text-sm text-gray-600 mt-4">
+      Don't have an account?
+      <a routerLink="/register" class="text-blue-500 hover:underline">Sign up</a>
+    </p>
+  </form>
+</div>
