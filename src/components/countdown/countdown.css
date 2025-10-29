@@ -1,0 +1,73 @@
+/* Custom animations and transitions for the countdown component */
+
+/* Smooth circular progress animation */
+.circle-progress {
+  transition: stroke-dashoffset 100ms ease-in-out;
+}
+
+
+/* Pulse animation for running state */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.running .timer-text {
+  animation: pulse 2s infinite;
+}
+
+/* Button hover animations */
+.btn-primary {
+  transition: all 0.2s ease-in-out;
+  transform: translateY(0);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress bar smooth animation */
+.progress-bar {
+  transition: width 0.5s ease-in-out;
+}
+
+/* Badge animations */
+.badge {
+  transition: all 0.2s ease-in-out;
+}
+
+.badge:hover {
+  transform: scale(1.05);
+}
+
+/* Card hover effects */
+.session-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.session-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .timer-circle {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .timer-text {
+    font-size: 3rem;
+  }
+}

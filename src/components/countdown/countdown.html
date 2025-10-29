@@ -1,0 +1,90 @@
+<div
+  class="flex justify-center items-center flex-col md:flex-row md:gap-20 lg:gap-40 xl:gap-60 p-6 bg-gray-50"
+>
+  <!-- Left side - Timer circle and controls -->
+  <div class="flex flex-col items-center justify-center">
+    <div class="mb-8"></div>
+
+    <!-- Circular progress timer -->
+    <div class="relative">
+      <svg class="w-80 h-80 transform -rotate-90 -flip" viewBox="0 0 260 260">
+        <!-- Background circle -->
+        <circle
+          cx="130"
+          cy="130"
+          [style.r]="raduis"
+          stroke="#e5e7eb"
+          stroke-width="15"
+          fill="none"
+        />
+        <!-- Progress circle -->
+        <circle
+          cx="130"
+          cy="130"
+          r="110"
+          stroke="#3b82f6"
+          stroke-width="15"
+          fill="none"
+          stroke-linecap="round"
+          [style.stroke-dasharray]="circumference"
+          [style.stroke-dashoffset]="strokeDashoffset"
+          class="transition-all duration-400"
+        />
+      </svg>
+
+      <!-- Timer display in center -->
+      <div class="absolute inset-0 flex flex-col items-center justify-center">
+        <div class="text-6xl font-black text-gray-900 mb-2">{{ displayTime }}</div>
+        <div class="text-gray-600 text-lg">{{ sessionType }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right side - Session info and controls -->
+  <div class="w-full flex flex-col justify-center lg:w-80 space-y-6">
+    <!-- Work Session info -->
+    <div class="bg-white rounded-lg p-6 shadow-sm">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold text-gray-900 flex items-center">Work Session</h3>
+      </div>
+
+      <!-- Session stats -->
+      <div class="flex items-center space-x-4 text-sm text-gray-600 mb-4">
+        <div class="flex items-center">{{ workSessions() }}/{{ totalSessions() }}</div>
+        <div class="flex items-center">{{ notesCount() }}/{{ totalNotes() }}</div>
+      </div>
+
+      <!-- Daily progress -->
+      <div class="text-sm">
+        <span class="text-gray-600"
+          >Focus progress: {{ ((1 - progressPercentage) * 100).toFixed(0) }}% complete</span
+        >
+        <div class="w-full bg-gray-200 rounded-full h-3">
+          <div
+            class="bg-green-400 h-3 rounded-full transition-all duration-300"
+            [style.width.%]="(1 - progressPercentage) * 100"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Control buttons -->
+    <div class="space-y-3">
+      <!-- Start/Pause button -->
+      <button
+        (click)="isRunning() ? pause() : start()"
+        class="w-full flex items-center justify-center px-6 py-4 bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold rounded-lg transition-colors shadow-sm"
+      >
+        {{ isRunning() ? 'Pause' : 'Start' }}
+      </button>
+
+      <!-- Skip button -->
+      <button
+        (click)="reset()"
+        class="w-full flex items-center justify-center px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+      >
+        Skip
+      </button>
+    </div>
+  </div>
+</div>
