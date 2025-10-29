@@ -1,0 +1,40 @@
+<div class="flex flex-col items-center justify-center min-h-[90vh] bg-gray-100">
+  <div class="text-center mb-8">
+    <img src="logo.png" alt="FocusFlow Logo" class="w-12 h-12 mb-4 mx-auto" />
+    <h1 class="text-2xl font-bold">Create your FocusFlow account</h1>
+    <p class="text-gray-600">Sign up to start your productivity journey.</p>
+  </div>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="w-full max-w-xs md:max-w-md lg:max-w-2xl rounded-lg"
+  >
+    @for (input of inputs; track $index) {
+    <div class="mb-1">
+      <label [for]="input.id" class="block text-sm font-medium text-gray-700">{{
+        input.name
+      }}</label>
+      <input
+        [type]="input.type"
+        [id]="input.id"
+        [name]="input.id"
+        [placeholder]="'Enter your ' + input.name"
+        [formControlName]="input.id"
+        [ngClass]="{ 'border-red-700': isError(input.id) }"
+        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-400"
+      />
+      <small class="text-red-500 mt-1">
+        {{ getError(input.id) }}
+        <span class="opacity-0">s</span>
+      </small>
+    </div>
+    }
+    <button type="submit" [disabled]="!form.valid" class="w-full bg-blue-500 text-white disabled:bg-blue-400 py-2 rounded-md hover:bg-blue-600">
+      Sign Up
+    </button>
+    <p class="text-center text-sm text-gray-600 mt-4">
+      Already have an account?
+      <a routerLink="/login" class="text-blue-500 hover:underline">Sign in</a>
+    </p>
+  </form>
+</div>
