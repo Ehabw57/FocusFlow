@@ -16,33 +16,33 @@
   </div>
 
   <!-- Todos and tasks -->
-  <div class="flex flex-col gap-2 mt-2">
-    @for (todo of todos(); track todo.id) {
+  <div class="todos-constainer flex flex-col gap-2 mt-2 h-60 overflow-y-scroll">
+    @for (todo of todos; track $index) {
     <div
       class="group px-3 flex items-center justify-between bg-gray-200 hover:bg-gray-100 transition-colors rounded-md"
     >
       <div class="flex items-center space-x-3 flex-1">
         <button
-          (click)="removeTask(todo.id)"
-          class="text-red-400 hover:text-red-700 ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          (click)="removeTask($index)"
+          class="max-w-0 opacity-0 overflow-hidden text-red-400 hover:text-red-700 ml-2 group-hover:max-w-4 group-hover:opacity-100 transition-all duration-400"
         >
           X
         </button>
         <label
-          [for]="'todo' + todo.id"
+          [for]="'todo' + $index"
           class="text-sm py-4 flex-1 transition-all"
           [class.line-through]="todo.completed"
           [ngClass]="todo.completed ? 'line-through text-gray-500 ml-2' : 'text-gray-900'"
         >
-          {{ todo.text }}
+          {{ todo.title }}
         </label>
       </div>
 
-      <div class="flex justify-center items-center">
+      <div class="flex relative justify-center items-center">
         <input
           type="checkbox"
-          [id]="'todo' + todo.id"
-          (change)="toggleTask(todo.id)"
+          [id]="'todo' + $index"
+          (change)="toggleTask($index)"
           [checked]="todo.completed"
           class="peer appearance-none size-5 border border-gray-400 rounded-sm checked:bg-green-600 checked:border-0"
         />

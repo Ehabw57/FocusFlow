@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TodoService } from '../../services/todo-service';
+import { Todo } from '../../models/user';
 
 export interface TodoItem {
   id: number;
@@ -13,48 +15,38 @@ export interface TodoItem {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './todo.html',
-  styleUrl: './todo.css'
+  styleUrl: './todo.css',
 })
 export class TodoComponent {
+  todos: Todo[] = [];
   newTaskText = signal('');
-  todos = signal<TodoItem[]>([
-    { id: 1, text: 'Review project proposal', completed: false },
-    { id: 2, text: 'Prepare presentation slides', completed: false },
-    { id: 3, text: 'Respond to emails', completed: false },
-    { id: 4, text: 'Schedule team meeting', completed: false }
-  ]);
 
-  private nextId = 5;
+  constructor(private todoService: TodoService) {
+    this.todos = this.todoService.getTodos();
+  }
 
   addTask() {
     const text = this.newTaskText().trim();
     if (text) {
-      this.todos.update(todos => [
-        ...todos,
-        { id: this.nextId++, text, completed: false }
-      ]);
-      this.newTaskText.set('');
+      this.todoService.addTodo({ title: text, completed: false });
     }
+    this.newTaskText.set('');
   }
 
-  toggleTask(id: number) {
-    this.todos.update(todos =>
-      todos.map(todo =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
+  toggleTask(index: number) {
+    this.todoService.switchTodoCompletion(index);
   }
 
   removeTask(id: number) {
-    this.todos.update(todos => todos.filter(todo => todo.id !== id));
+    this.todoService.deleteTodo(id);
   }
 
   get completedCount(): number {
-    return this.todos().filter(todo => todo.completed).length;
+    return this.todos.filter((todo) => todo.completed).length;
   }
 
   get totalCount(): number {
-    return this.todos().length;
+    return this.todos.length;
   }
 
   onKeyPress(event: KeyboardEvent) {
